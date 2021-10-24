@@ -1,6 +1,7 @@
 # getPhyloTreeMatTrim.R
 # Author: Sara Stoudt
 # Date: 6/15/2021
+# Updated: 10/24/2021
 
 ### setup ###
 dropped <- gsub("_", " ", allData$common_name[abs(allData$difference) > 10])
@@ -8,7 +9,7 @@ cat(sort(dropped), sep = ", ")
 allData <- allData %>% filter(difference < 10 & difference > -10)
 dim(allData) ## 424
 
-numHexes <- read.csv("intermediate_data/species_rarity.csv") #
+numHexes <- read.csv("intermediate_data/species_rarity.csv") 
 dim(numHexes) # 482
 
 trait_dat <- read_csv("intermediate_data/trait_data.csv")
@@ -28,8 +29,8 @@ dim(s1_dat) ## 424
 
 ## https://birdtree.org/subsets/
 
-if (!file.exists("intermediate_phylo_materials/phylo_covSmallDrop.rds")) {
-  treeNames <- read.csv("intermediate_phylo_materials/BLIOCPhyloMasterTax.csv")
+if (!file.exists("intermediate_data/phylo_covSmallDrop.rds")) {
+  treeNames <- read.csv("intermediate_data/BLIOCPhyloMasterTax.csv")
   ## created from species list on https://birdtree.org/subsets/
 
 
@@ -42,7 +43,7 @@ if (!file.exists("intermediate_phylo_materials/phylo_covSmallDrop.rds")) {
 
   your_tree_results <- "tree-pruner-dcef2944-56b5-4250-9db5-5b40567fcfed" ## replace with your own
   ## put in intermediate_phylo_materials folder
-  tree <- read.nexus(paste("intermediate_phylo_materials/", your_tree_results, "/output.nex", sep = ""))
+  tree <- read.nexus(paste("intermediate_data/", your_tree_results, "/output.nex", sep = ""))
 
   # http://blog.phytools.org/2016/03/method-to-compute-consensus-edge.html
   branchLengths <- consensus.edges(tree, if.absent = "ignore") ## will take a little bit
@@ -51,7 +52,7 @@ if (!file.exists("intermediate_phylo_materials/phylo_covSmallDrop.rds")) {
   dim(phylo_cov) ## 424 x 424
   ## save this
 
-  saveRDS(phylo_cov, "intermediate_phylo_materials/phylo_covSmallDrop.rds")
+  saveRDS(phylo_cov, "intermediate_data/phylo_covSmallDrop.rds")
 } else {
-  phylo_cov <- readRDS("intermediate_phylo_materials/phylo_covSmallDrop.rds")
+  phylo_cov <- readRDS("intermediate_data/phylo_covSmallDrop.rds")
 }

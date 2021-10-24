@@ -1,6 +1,7 @@
 # getPhyloTreeMat.R
 # Author: Sara Stoudt
 # Date: 6/15/2021
+# Updated: 10/24/2021
 
 
 ### read in necessary data ####
@@ -25,37 +26,37 @@ s1_dat <- allData %>%
   left_join(ebird_specs, by = c("species" = "SCIENTIFIC.NAME")) %>%
   left_join(trait_dat, by = c("specID" = "species_code")) %>%
   filter(!is.na(common_name), !is.na(family))
-dim(s1_dat) ## 473
+dim(s1_dat) ## 472
 
 s1_dat <- merge(s1_dat, numHexes, by.x = "species", by.y = "species")
-dim(s1_dat) ## 473
+dim(s1_dat) ## 472
 
 #### get tree - only run manually once ####
 ## https://birdtree.org/subsets/
 
-if (!file.exists("intermediate_phylo_materials/phylo_covSmall.rds")) {
-  treeNames <- read.csv("intermediate_phylo_materials/BLIOCPhyloMasterTax.csv")
+if (!file.exists("intermediate_data/phylo_covSmall.rds")) {
+  treeNames <- read.csv("intermediate_data/BLIOCPhyloMasterTax.csv")
   ## created from species list on https://birdtree.org/subsets/
 
-  which(treeNames$specID %in% unique(s1_dat$specID)) %>% length() ## 473
+  which(treeNames$specID %in% unique(s1_dat$specID)) %>% length() ## 472
 
-  unique(s1_dat$species) %>% length() ## 473
+  unique(s1_dat$species) %>% length() ## 472
 
   write.csv(treeNames$Scientific[which(treeNames$specID %in% unique(s1_dat$specID))], "birdsWeNeed.csv", row.names = F) ## copy and paste into https://birdtree.org/subsets/ to get tree
   ## Ericson All Species: a set of 10000 trees with 9993 OTUs each, create 100 trees
 
-  your_tree_results <- "tree-pruner-7a0afbd7-31b6-49e2-8a03-f8c449b1dcb6" ## replace with your own
+  your_tree_results <- "tree-pruner-ed3d7a63-57e3-4fc3-9780-21e8bfe6d1dc" ## replace with your own
   ## put in intermediate_phylo_materials folder
-  tree <- read.nexus(paste("intermediate_phylo_materials/", your_tree_results, "/output.nex", sep = ""))
+  tree <- read.nexus(paste("intermediate_data/", your_tree_results, "/output.nex", sep = ""))
 
   # http://blog.phytools.org/2016/03/method-to-compute-consensus-edge.html
   branchLengths <- consensus.edges(tree, if.absent = "ignore") ## will take a little bit
 
   phylo_cov <- vcv(branchLengths) ## covariance matrix
-  dim(phylo_cov) ## 473 x 473
+  dim(phylo_cov) ## 472 x 472
   ## save this
 
-  saveRDS(phylo_cov, "intermediate_phylo_materials/phylo_covSmall.rds")
+  saveRDS(phylo_cov, "intermediate_data/phylo_covSmall.rds")
 } else {
-  phylo_cov <- readRDS("intermediate_phylo_materials/phylo_covSmall.rds")
+  phylo_cov <- readRDS("intermediate_data/phylo_covSmall.rds")
 }

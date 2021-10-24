@@ -1,6 +1,7 @@
 # orderEffects.R
 # Author: Sara Stoudt
 # Date: 6/15/2021
+# Updated: 10/24/2021
 
 fit <- rma.mv(difference ~ order - 1,
   diff_SE^2,
@@ -22,4 +23,4 @@ nice_names <- c(
 toSave <- cbind.data.frame(order = row.names(fit$beta), beta = fit$beta[, 1], se = fit$se, common_order_name = nice_names)
 
 
-write.csv(toSave, "intermediate_phylo_materials/orderMetaAnalysisResults.csv", row.names = F)
+write.csv(toSave, "intermediate_data/orderMetaAnalysisResults.csv", row.names = F)

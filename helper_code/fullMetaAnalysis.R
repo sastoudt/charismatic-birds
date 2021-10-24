@@ -1,11 +1,12 @@
 # fullMetaAnalysis.R
 # Author: Sara Stoudt
 # Date: 6/15/2021
+# Updated: 10/24/2021
 
 #### setup ####
 attr(phylo_cov, which = "dimnames")[[1]]
 
-treeNames <- read.csv("intermediate_phylo_materials/BLIOCPhyloMasterTax.csv") 
+treeNames <- read.csv("intermediate_data/BLIOCPhyloMasterTax.csv") 
 
 dimName <- gsub("_", " ", attr(phylo_cov, which = "dimnames")[[1]])
 
