@@ -49,6 +49,19 @@ EltonTraits <- read_tsv(eltontraits_input_file) %>%
   mutate(species_code = manual_get_ids(Scientific, db = "ott")) %>% 
   filter(species_code %in% Schuetz_data$species_code)
 
+iucn_taxon <- read_tsv("raw_data/taxon.txt", col_names = FALSE) %>% 
+  filter(X3 == "ANIMALIA", X4 == "CHORDATA", X6 == "AVES") %>% 
+  mutate(scientific.name = paste(X8, X9)) %>%
+  left_join(EltonTraits[, c("Scientific", "species_code")], 
+            by = c(scientific.name = "Scientific")) %>% 
+  select(X1, scientific.name, species_code) %>% 
+  left_join(read_tsv("raw_data/distribution.txt", col_names = FALSE,
+                     col_types = list(X1 = col_character())), by = "X1") %>% 
+  rename(endangerment = X2) %>% 
+  select(scientific.name, species_code, endangerment)
+
+iucn_taxon$species_code[is.na(iucn_taxon$species_code)] <- 
+  manual_get_ids(iucn_taxon$scientific.name[is.na(iucn_taxon$species_code)], "ott")
 
 
 trait_data <- left_join(Schuetz_data, EltonTraits, by = "species_code") %>% 
@@ -57,9 +70,30 @@ trait_data <- left_join(Schuetz_data, EltonTraits, by = "species_code") %>%
   rename(species = scientific.name, family = Family, order = Order,
          pelagic = PelagicSpecialist, mass = `BodyMass-Value`) %>% 
   filter(!pelagic) %>% 
+  left_join(iucn_taxon[, c("endangerment", "species_code")], by = "species_code") %>% 
   filter(species_code %in% ebird_specs$specID)
 
+endangerment_manual_fills <- data.frame(
+  species = c(
+    "Haematopus bachmani", "Himantopus mexicanus", 
+    "Luscinia svecica", "Icterus bullockii",
+    "Butorides virescens", "Aphelocoma insularis", 
+    "Dryocopus pileatus", "Porphyrio martinica",
+    "Ammodramus henslowii", "Acanthis hornemanni",
+    "Picoides borealis"
+  ),
+  endangerment = c(
+    "Not Listed", "Not Listed",
+    "Least Concern", "Least Concern",
+    "Least Concern", "Not Listed",
+    "Least Concern", "Least Concern",
+    "Least Concern", "Not Listed",
+    "Near Threatened"
+  )
+)
 
+trait_data$endangerment[match(endangerment_manual_fills$species, trait_data$species)] <-
+  endangerment_manual_fills$endangerment
 
 ##### Prepare count data #####
 # Read in some important input files
