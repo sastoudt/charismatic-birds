@@ -11,7 +11,9 @@ The following data inputs are required but not published with this directory. Th
 - *The eBird Basic Dataset (EBD)*. Needed by script #00. Can be downloaded at [the eBird download page](https://ebird.org/data/download/)
 - *The iNaturalist bird dataset*. Needed by script #01. Can be downloaded on [GBIF](https://doi.org/10.15468/ab3s5x)
 - *The EltonTraits dataset*. Needed by script #03. [See the publication](http://doi.wiley.com/10.1890/13-1917.1).
-- *The supplementary trait dataset produced by Schuetz and Johnston (2019)*. Needed by script #03. [See the publication]().
+- *The supplementary trait dataset produced by Schuetz and Johnston (2019)*. Needed by script #03. [See the publication](https://doi.org/10.1073/pnas.1820670116).
+- *IUCN Red List species endangerment status*. Needed by script #03. Available on [GBIF](https://www.gbif.org/dataset/19491596-35ae-4a91-9a98-85cf505f1bd3); place
+the entire folder in the `raw_data` directory.
 
 They must be placed in the `raw_data` directory and modify the relevant code to match the file name provided.
 
