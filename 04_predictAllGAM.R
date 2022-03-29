@@ -18,7 +18,7 @@ library(nimble)
 flog.appender(appender.file("warning.log"))
 flog.threshold(WARN)
 
-source("predictAllGAM_fn.R")
+source("helper_code/predictAllGAM_fn.R")
 
 # We create some directories. lpmtx will store some GAM outputs that we won't
 # actually use but needed for reproducing the surfaces. ind_results is where

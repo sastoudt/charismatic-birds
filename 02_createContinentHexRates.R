@@ -17,7 +17,7 @@ require(taxalight)
 # Read in the list of state codes
 statecode_df <- read_csv("raw_data/statecodes.csv")
 
-source("contHexDetectionRate_fn.R")
+source("helper_code/contHexDetectionRate_fn.R")
 
 # Create the continent-wide hex grid 
 continentcode <- statecode_df %>% filter(!Abbreviation %in% c("AK", "HI"))

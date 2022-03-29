@@ -22,7 +22,7 @@ library(nimble)
 flog.appender(appender.file("warning.log"))
 flog.threshold(WARN)
 
-source("predictAllGAM_fn.R")
+source("helper_code/predictAllGAM_fn.R")
 
 if (!dir.exists("intermediate_data/warnings30")) dir.create("intermediate_data/warnings30")
 if (!dir.exists("intermediate_data/ind_results30")) dir.create("intermediate_data/ind_results30")

@@ -1,6 +1,6 @@
-# Identifying Charismatic Bird Species and Traits with Community Science Observations
+# Identifying Engaging Bird Species and Traits with Community Science Observations
 
-This repository contains all code needed to replicate the analyses performed in "Identifying Charismatic Bird Species and Traits with Community Science Observations" by Stoudt, Goldstein, and de Valpine.
+This repository contains all code needed to replicate the analyses performed in "Identifying Engaging Bird Species and Traits with Community Science Observations" by Stoudt, Goldstein, and de Valpine.
 
 ### Components
 

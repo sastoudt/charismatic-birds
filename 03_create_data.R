@@ -14,7 +14,7 @@ library(tidyverse)
 library(taxalight)
 library(rgdal)
 
-source("contHexDetectionRate_fn.R")
+source("helper_code/contHexDetectionRate_fn.R")
 
 ##### Prepare inputs #####
 hex_grid <- readOGR(dsn = "intermediate_data/continent_hexes", layer = "continent_hexes")
